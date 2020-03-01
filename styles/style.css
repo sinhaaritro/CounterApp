@@ -1,0 +1,17 @@
+.my_modal {
+    background-color: #fff;
+    position:absolute;
+    width: 33%;
+    min-width: 300px;
+    z-index: 10;
+    top:10%;
+	bottom: 0;
+	left: 0;
+	right: 0;
+    margin: auto;
+}
+
+ion-icon {
+    font-size: 24px;
+    vertical-align: middle;
+  }
