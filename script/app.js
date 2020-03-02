@@ -1,5 +1,6 @@
 const addCounter = document.querySelector('.add_counter');
 const container = document.querySelector('.container');
+const ul = document.querySelector('ul');
 
 //Modal Generator
 const generateModal = function (modal_title, modalBody, save_Function) {
@@ -54,7 +55,7 @@ addCounter.addEventListener('click', function () {
     nameLabel.textContent = 'Name';
 
     let nameInput = document.createElement('input');
-    nameInput.classList.add('bg-white', 'focus:outline-none', 'focus:shadow-outline', 'border', 'border-gray-300', 'rounded-lg', 'py-2', 'px-4', 'my-2', 'block', 'w-full', 'appearance-none', 'leading-normal', 'name_input');
+    nameInput.classList.add('bg-white', 'focus:outline-none', 'focus:shadow-outline', 'border', 'border-gray-300', 'rounded-lg', 'py-2', 'px-4', 'my-2', 'block', 'w-full', 'appearance-none', 'leading-normal', 'name_input_given');
     nameInput.setAttribute('type', 'text');
     nameInput.setAttribute('placeholder', 'Opening App');
 
@@ -63,7 +64,7 @@ addCounter.addEventListener('click', function () {
     counterLabel.textContent = 'Start with';
 
     let counterInput = document.createElement('input');
-    counterInput.classList.add('bg-white', 'focus:outline-none', 'focus:shadow-outline', 'border', 'border-gray-300', 'rounded-lg', 'py-2', 'px-4', 'my-2', 'block', 'w-full', 'appearance-none', 'leading-normal', 'initial_value');
+    counterInput.classList.add('bg-white', 'focus:outline-none', 'focus:shadow-outline', 'border', 'border-gray-300', 'rounded-lg', 'py-2', 'px-4', 'my-2', 'block', 'w-full', 'appearance-none', 'leading-normal', 'initial_value_given');
     counterInput.setAttribute('type', 'text');
     counterInput.setAttribute('placeholder', '1');
 
@@ -78,27 +79,25 @@ addCounter.addEventListener('click', function () {
 //Close Modal
 function closeModal() {
     document.querySelector('.my_modal').remove();
-}
+};
 
 //Add to list
-const ul = document.querySelector('ul');
 function addCounterToList() {
-    const counterName = document.querySelector('.name_input').value.trim();
-    const initialValue = document.querySelector('.initial_value').value;
-
-    if (counterName.length) {
+    const counterName = document.querySelector('.name_input_given').value.trim();
+    const initialValue = Number(document.querySelector('.initial_value_given').value);
+    if (counterName.length && Number.isInteger(initialValue)) {
         let counter = document.createElement('li');
         counter.classList.add('flex', 'justify-between', 'items-center', 'm-2')
 
         let counterText = document.createElement('p');
-        counterText.classList.add('text-base', 'mx-2');
+        counterText.classList.add('text-base', 'mx-2', 'counter_name');
         counterText.innerText = counterName;
 
         let counterRight = document.createElement('span');
         counterRight.classList.add('flex', 'items-center', 'align-middle', 'mx-2');
 
         let counterAddButton = document.createElement('button');
-        counterAddButton.classList.add('focus:outline-none');
+        counterAddButton.classList.add('focus:outline-none', 'add_value');
 
         let ioniconAdd = document.createElement('ion-icon');
         ioniconAdd.setAttribute('name', 'add-circle');
@@ -107,11 +106,11 @@ function addCounterToList() {
         counterAddButton.appendChild(ioniconAdd);
 
         let counterNumber = document.createElement('p');
-        counterNumber.classList.add('mx-2');
+        counterNumber.classList.add('mx-2', 'initial_value');
         counterNumber.innerText = initialValue;
 
         let counterSubtractButton = document.createElement('button');
-        counterSubtractButton.classList.add('focus:outline-none');
+        counterSubtractButton.classList.add('focus:outline-none', 'subtract_value');
 
         let ioniconSubtract = document.createElement('ion-icon');
         ioniconSubtract.setAttribute('name', 'remove-circle');
@@ -120,7 +119,7 @@ function addCounterToList() {
         counterSubtractButton.appendChild(ioniconSubtract);
 
         let counterDeleteButton = document.createElement('button');
-        counterDeleteButton.classList.add('focus:outline-none', 'ml-4');
+        counterDeleteButton.classList.add('focus:outline-none', 'ml-4', 'delete_counter');
 
         let ioniconTrash = document.createElement('ion-icon');
         ioniconTrash.setAttribute('name', 'trash');
@@ -138,14 +137,45 @@ function addCounterToList() {
 
         ul.appendChild(counter);
     }
-
     closeModal();
+};
+
+ul.addEventListener('click', e => {
+    if (e.target.parentElement.classList.contains('delete_counter')){
+        deleteLi(e.target);
+    }else if( (e.target.parentElement.classList.contains('subtract_value'))){
+        decreaseValue(e.target);
+    }else if  (e.target.parentElement.classList.contains('add_value')){
+        increaseValue(e.target);
+    }
+});
+//Delete from list
+function deleteLi(e){
+    e.parentElement.parentElement.parentElement.remove();
 }
 
-//Save Counter
+//Increment
+function increaseValue(e){
+    currentValue = Number(e.parentElement.parentElement.children[1].innerText);
+    currentValue = currentValue + 1;
+    e.parentElement.parentElement.children[1].innerText = currentValue;
+}
+//Decrement
+function decreaseValue(e){
+    currentValue = Number(e.parentElement.parentElement.children[1].innerText);
+    currentValue = currentValue - 1;
+    e.parentElement.parentElement.children[1].innerText = currentValue;
+}
 
-//Delete from list
 
-//increment
+//Local Storage
+//Store
 
-//decrement
+//Get
+
+//Update
+
+//Delete
+
+
+
