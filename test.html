@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Tailwind CSS Base -->
+    <link rel="stylesheet" href="./styles/tailwindcss.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="./styles/style.css">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <div class="bg-gray-100 rounded-sm shadow-md p-5 flex flex-col my_modal">
+            <p class="mx-auto text-3xl">Add Counter</p>
+            <div class="flex flex-col">
+                <input class="shadow appearance-none border border-gray-200 rounded w-full my-1 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-purple-500" id="counterName" type="text" placeholder="Counter name">
+                <input class="shadow appearance-none border border-gray-200 rounded w-full my-1 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-purple-500" id="counterName" type="text" placeholder="Description">
+                <input class="shadow appearance-none border border-gray-200 rounded w-full my-1 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-purple-500" id="counterName" type="text" placeholder="Initial Value">
+                <input class="shadow appearance-none border border-gray-200 rounded w-full my-1 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-purple-500" id="counterName" type="text" placeholder="Category">
+                <div class="flex -mx-1 my-1">
+                    <input class="shadow appearance-none border border-gray-200 rounded w-1/2 mx-1 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-purple-500" id="counterName" type="text" placeholder="Increment Value">
+                    <input class="shadow appearance-none border border-gray-200 rounded w-1/2 mx-1 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-purple-500" id="counterName" type="text" placeholder="Decrement Value">
+                </div>
+                <input class="shadow appearance-none border border-gray-200 rounded w-full my-1 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-purple-500" id="counterName" type="text" placeholder="Auto Increment Interval">
+                <input class="shadow appearance-none border border-gray-200 rounded w-full my-1 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-purple-500" id="counterName" type="text" placeholder="Auto Decrement Interval">
+            </div>
+            <div class="flex justify-end -mx-1 my-2">
+                    <button class="text-purple-700 mx-1 py-1 px-3 focus:outline-none">Discard</button>
+                    <button class="bg-purple-700 shadow rounded mx-1 py-1 px-3 text-gray-100 focus:outline-none">Save</button>
+            </div>
+        </div>
+
+        <li class="flex flex-col items-center m-3">
+            <div class="flex w-full">
+                <p class="w-full text-center -mr-10 self-center">Counter Name</p>
+                <button class="focus:outline-none delete_counter w-10 h-10 flex items-center justify-center">
+                    <i class="material-icons md-24">delete</i>
+                </button>
+            </div>
+            <div class="flex w-full h-16">
+                <button class="flex-grow-0 bg-purple-700 w-16 h-full flex justify-center items-center rounded-l focus:outline-none">
+                    <i class="material-icons md-light md-36">remove</i>
+                </button>
+                <div class="flex-grow text-center h-full flex items-center justify-center border-t-2 border-b-2 border-purple-700 text-2xl">
+                    1
+                </div>
+                <button class="flex-grow-0 bg-purple-700 w-16 h-full flex justify-center items-center rounded-r focus:outline-none">
+                    <i class="material-icons md-light md-36">add</i>                            
+                </button>
+            </div>
+        </li>
+    </div>
+    <script src="./script/counter.js"></script>
+    <script src="./script/ui.js"></script>
+    <script>
+        // window.addEventListener('beforeunload', function (e) {
+        //     e.preventDefault();
+        //     e.returnValue = '';
+        //     console.log('C');
+        // })
+    </script>
+</body>
+</html>

@@ -1,125 +1,199 @@
-const container = document.querySelector('.container');
+const base = document.querySelector('.base');
 const ul = document.querySelector('ul');
 
-//Modal Generator
-const generateModal = (modal_title, save_Function) => {
-    const modal = document.createElement('div');
-    modal.classList.add('my_modal', 'outline-none');
-    modal.setAttribute("tabIndex", "-1");
+//Background Blur UI
+class BackdropUI {
+    static display(){
+        const background = document.createElement('div');
+        background.classList.add('fixed', 'inset-0', 'w-full', 'h-full', 'bg_transperent', 'backdrop');
+        base.appendChild(background);
+    }
+    static destroy(){
+        document.querySelectorAll('.backdrop').forEach(element => {element.remove()});
+    }
+}
 
-    const modalContainer = document.createElement('div');
-    modalContainer.classList.add('container', 'border', 'rounded-md');
+//Add Counter UI Model Form
+class AddCounterUI {
+    static display(){
+        BackdropUI.display();
 
-    const modalHead = document.createElement('p');
-    modalHead.classList.add('text-3xl', 'my-3', 'px-4');
-    modalHead.textContent = modal_title;
+        const counter = PopUpUI.display();
 
-    const horizontalRule = document.createElement('hr');
+        const title = document.createElement('p');
+        title.classList.add('mx-auto', 'text-3xl', 'my-1', 'text-purple-700');
+        title.innerText = 'Add Counter';
 
-    const modalBody = document.createElement('div');
-    modalBody.classList.add('m-3');
+        const body = document.createElement('div');
+        body.classList.add('flex', 'flex-col', 'my-1');
 
-    const nameLabel = document.createElement('label');
-    nameLabel.classList.add('block', 'text-gray-700', 'text-sm', 'font-bold', 'mb-2');
-    nameLabel.textContent = 'Name';
+        const counterName = InputBoxUI.display({type: 'text', id: 'counterName', placeholder: 'Counter Name'});
+        counterName.classList.add('w-full', 'my-1');
+        body.appendChild(counterName);
 
-    const nameInput = document.createElement('input');
-    nameInput.classList.add('bg-white', 'focus:outline-none', 'focus:shadow-outline', 'border', 'border-gray-300', 'rounded-lg', 'py-2', 'px-4', 'my-2', 'block', 'w-full', 'appearance-none', 'leading-normal', 'name_input_given');
-    nameInput.setAttribute('type', 'text');
-    nameInput.setAttribute('placeholder', 'Opening App');
+        // const description = InputBoxUI.display({type: 'text', id: 'description', placeholder: 'Description'});
+        // description.classList.add('w-full', 'my-1');
+        // body.appendChild(description);
 
-    const counterLabel = document.createElement('label');
-    counterLabel.classList.add('block', 'text-gray-700', 'text-sm', 'font-bold', 'mb-2');
-    counterLabel.textContent = 'Start with';
+        const initialValue = InputBoxUI.display({type: 'text', id: 'initialValue', placeholder: 'Initial value'});
+        initialValue.classList.add('w-full', 'my-1');
+        body.appendChild(initialValue);
 
-    const counterInput = document.createElement('input');
-    counterInput.classList.add('bg-white', 'focus:outline-none', 'focus:shadow-outline', 'border', 'border-gray-300', 'rounded-lg', 'py-2', 'px-4', 'my-2', 'block', 'w-full', 'appearance-none', 'leading-normal', 'initial_value_given');
-    counterInput.setAttribute('type', 'text');
-    counterInput.setAttribute('placeholder', '1');
+        // const category = InputBoxUI.display({type: 'text', id: 'category', placeholder: 'Category'});
+        // category.classList.add('w-full', 'my-1');
+        // body.appendChild(category);
 
-    modalBody.appendChild(nameLabel);
-    modalBody.appendChild(nameInput);
-    modalBody.appendChild(counterLabel);
-    modalBody.appendChild(counterInput);
+        const incrementDecrement = document.createElement('div');
+        incrementDecrement.classList.add('flex', '-mx-1', 'my-1');
 
-    const modalBottom = document.createElement('div');
-    modalBottom.classList.add('flex', 'justify-end', 'm-3');
+        const incrementValue = InputBoxUI.display({type: 'text', id: 'incrementValue', placeholder: 'Increment Value'});
+        incrementValue.classList.add('w-1/2', 'mx-1');
+        incrementDecrement.appendChild(incrementValue);
 
-    const submitButton = document.createElement('button');
-    submitButton.setAttribute('type', 'button');
-    submitButton.classList.add('bg-green-500', 'text-white', 'py-2', 'px-4', 'mx-1', 'rounded', 'focus:outline-none', 'modal_save');
-    submitButton.textContent = 'Save';
-    submitButton.addEventListener('click', function () {
-        save_Function();
-    });
-    modalBottom.appendChild(submitButton);
+        const decrementValue = InputBoxUI.display({type: 'text', id: 'decrementValue', placeholder: 'Decrement Value'});
+        decrementValue.classList.add('w-1/2', 'mx-1');
+        incrementDecrement.appendChild(decrementValue);
 
-    const cancelButton = document.createElement('button');
-    cancelButton.setAttribute('type', 'button');
-    cancelButton.classList.add('bg-red-500', 'text-white', 'py-2', 'px-4', 'mx-1', 'rounded', 'focus:outline-none', 'modal_close');
-    cancelButton.textContent = 'Close';
-    cancelButton.addEventListener('click', closeModal);
-    modalBottom.appendChild(cancelButton);
+        body.appendChild(incrementDecrement);
 
-    modalContainer.appendChild(modalHead);
-    modalContainer.appendChild(horizontalRule);
-    modalContainer.appendChild(modalBody);
-    modalContainer.appendChild(modalBottom);
+        // const autoIncrementInterval = InputBoxUI.display({type: 'text', id: 'autoIncrementInterval', placeholder: 'Auto Increment Value'});
+        // autoIncrementInterval.classList.add('w-full', 'my-1');
+        // body.appendChild(autoIncrementInterval);
 
-    modal.appendChild(modalContainer);
-    container.appendChild(modal);
-};
+        // const autoDecrementInterval = InputBoxUI.display({type: 'text', id: 'autoDecrementInterval', placeholder: 'Auto Decrement Value'});
+        // autoDecrementInterval.classList.add('w-full', 'my-1');
+        // body.appendChild(autoDecrementInterval);
 
-//Counter List
-const generateCounterInList = (counterName, initialValue) => {
-    let counter = document.createElement('li');
-        counter.classList.add('flex', 'justify-between', 'items-center', 'm-2')
+        const control = document.createElement('div');
+        control.classList.add('flex', 'justify-end', '-mx-1', 'my-2');
 
-        let counterText = document.createElement('p');
-        counterText.classList.add('text-base', 'mx-2', 'counter_name');
-        counterText.innerText = counterName;
+        const discardButton = document.createElement('button');
+        discardButton.classList.add('text-purple-700', 'mx-1', 'py-1', 'px-3', 'focus:outline-none');
+        discardButton.innerText = 'Discard';
+        discardButton.addEventListener('click', () => {AddCounterUI.destroy()});
+        control.appendChild(discardButton);
 
-        let counterRight = document.createElement('span');
-        counterRight.classList.add('flex', 'items-center', 'align-middle', 'mx-2');
+        const saveButton = document.createElement('button');
+        saveButton.classList.add('bg-purple-700', 'shadow', 'rounded', 'mx-1', 'py-1', 'px-3', 'text-gray-100', 'focus:outline-none');
+        saveButton.innerText = 'Save';
+        saveButton.addEventListener('click', () => {addCounterToList()});
+        control.appendChild(saveButton);
 
-        let counterAddButton = document.createElement('button');
-        counterAddButton.classList.add('focus:outline-none', 'add_value');
+        counter.appendChild(title);
+        counter.appendChild(body);
+        counter.appendChild(control);
 
-        let ioniconAdd = document.createElement('ion-icon');
-        ioniconAdd.setAttribute('name', 'add-circle');
-        ioniconAdd.setAttribute('style', 'color: green;');
+        base.appendChild(counter);
+    }
+    static destroy(){
+        PopUpUI.destroy();
+    }
+}
 
-        counterAddButton.appendChild(ioniconAdd);
+//Add Counter List UI
+class CounterListUI {
+    static display({counter}){
+        const li = document.createElement('li');
+        li.classList.add('flex', 'flex-col', 'items-center', 'm-3');
+        li.setAttribute('id', counter.id);
 
-        let counterNumber = document.createElement('p');
-        counterNumber.classList.add('mx-2', 'initial_value');
-        counterNumber.innerText = initialValue;
+        const top = document.createElement('div');
+        top.classList.add('flex', 'w-full');
 
-        let counterSubtractButton = document.createElement('button');
-        counterSubtractButton.classList.add('focus:outline-none', 'subtract_value');
+        const counterName = document.createElement('p');
+        counterName.classList.add('w-full', 'text-center', '-mr-10', 'self-center');
+        counterName.innerText = counter.name;
 
-        let ioniconSubtract = document.createElement('ion-icon');
-        ioniconSubtract.setAttribute('name', 'remove-circle');
-        ioniconSubtract.setAttribute('style', 'color: red;');
+        const deleteBtn = document.createElement('button');
+        deleteBtn.classList.add('focus:outline-none', 'deleteCounter', 'w-10', 'h-10', 'flex', 'items-center', 'justify-center');
 
-        counterSubtractButton.appendChild(ioniconSubtract);
+        const deleteIcon = MaterialIconUI.display({text: 'delete'});
+        deleteBtn.appendChild(deleteIcon);
 
-        let counterDeleteButton = document.createElement('button');
-        counterDeleteButton.classList.add('focus:outline-none', 'ml-4', 'delete_counter');
+        top.appendChild(counterName);
+        top.appendChild(deleteBtn);
 
-        let ioniconTrash = document.createElement('ion-icon');
-        ioniconTrash.setAttribute('name', 'trash');
-        ioniconTrash.setAttribute('style', 'color: red;');
+        const bottom = document.createElement('div');
+        bottom.classList.add('flex', 'w-full', 'h-16');
 
-        counterDeleteButton.appendChild(ioniconTrash);
+        const subtractBtn = document.createElement('button');
+        subtractBtn.classList.add('flex-grow-0', 'bg-purple-700', 'w-16', 'h-full', 'flex', 'justify-center', 'items-center', 'rounded-l', 'focus:outline-none', 'subtractValue');
 
-        counterRight.appendChild(counterAddButton);
-        counterRight.appendChild(counterNumber);
-        counterRight.appendChild(counterSubtractButton);
-        counterRight.appendChild(counterDeleteButton);
+        const subtractIcon = MaterialIconUI.display({text: 'remove',size: 36, color: 'light'});
+        subtractBtn.appendChild(subtractIcon);
 
-        counter.appendChild(counterText);
-        counter.appendChild(counterRight);
+        const counterValue = document.createElement('div');
+        counterValue.classList.add('flex-grow', 'text-center', 'h-full', 'flex', 'items-center', 'justify-center', 'border-t-2', 'border-b-2', 'border-purple-700', 'text-2xl', 'px-2', 'bg-white', 'counterValue')
+        counterValue.innerText = counter.value;
 
-        ul.appendChild(counter);
-};
+        const addBtn = document.createElement('button');
+        addBtn.classList.add('flex-grow-0', 'bg-purple-700', 'w-16', 'h-full', 'flex', 'justify-center', 'items-center', 'rounded-r', 'focus:outline-none', 'addValue');
+
+        const addIcon = MaterialIconUI.display({text: 'add',size: 36, color: 'light'});
+        addBtn.appendChild(addIcon);
+
+        bottom.appendChild(subtractBtn);
+        bottom.appendChild(counterValue);
+        bottom.appendChild(addBtn);
+
+        li.appendChild(top);
+        li.appendChild(bottom);
+
+        ul.appendChild(li);
+    }
+    static destroy({e}){
+        const li = e.target.closest('li');
+        //TODO Data Delete
+        li.remove();
+    }
+}
+
+//Add Counter Details UI
+class CounterDetailsUI{
+    static display({e}){
+
+    }
+    static destroy(){
+
+    }
+}
+
+//Input Box Basic UI
+class InputBoxUI{
+    static display({type, id, placeholder}){
+        const inputBox = document.createElement('input');
+        inputBox.classList.add('shadow', 'appearance-none', 'border', 'border-gray-200', 'rounded', 'py-2', 'px-3', 'text-gray-700', 'leading-tight', 'focus:outline-none', 'focus:border-purple-500');
+        inputBox.setAttribute('type', type);
+        inputBox.setAttribute('id', id);
+        inputBox.setAttribute('placeholder', placeholder);
+        inputBox.setAttribute('autocomplete', 'off');
+        return inputBox;
+    }
+}
+
+//Material Icon UI
+class MaterialIconUI{
+    static display({text, size, color, state}){
+        const materialIcon = document.createElement('i');
+        const iconSize = size!==null ? 'md-' + size : '';
+        const iconColor = color!==null ? 'md-' + color : '';
+        const iconState = state!==null ? 'md-' + state : '';
+        materialIcon.classList.add('material-icons', iconSize, iconColor, iconState);
+        materialIcon.innerText = text;
+        return materialIcon;
+    }
+}
+
+//Pop Up UI
+class PopUpUI{
+    static display(){
+        BackdropUI.display();
+        const popup = document.createElement('div');
+        popup.classList.add('bg-gray-100', 'rounded-md', 'shadow-md', 'p-5', 'flex', 'flex-col', 'popUpUI');
+        return popup;
+    }
+    static destroy(){
+        BackdropUI.destroy();
+        document.querySelectorAll('.popUpUI').forEach(element => {element.remove()});
+    }
+}

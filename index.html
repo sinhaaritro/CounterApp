@@ -6,47 +6,86 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Tailwind CSS Base -->
     <link rel="stylesheet" href="./styles/tailwindcss.css">
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="./styles/style.css">
     <title>Counter App</title>
 </head>
 
 <body>
-    <br>
-    <div class="container mx-auto h-full flex flex-col justify-center items-center">
-        <p class="block text-3xl">Counters</p>
-
-        <ul class="flex flex-col border-2 rounded w-1/2">
-            <li class="flex justify-between items-center m-2">
-                <p class="text-base mx-2 counter_name">Counter Name</p>
-                <span class="flex items-center align-middle mx-2">
-                    <button class="focus:outline-none add_value"><ion-icon name="add-circle" style="color: green;"></ion-icon></button>
-                    <p class="mx-2 initial_value">1</p>
-                    <button class="focus:outline-none subtract_value"><ion-icon name="remove-circle" style="color: red;"></ion-icon></button>
-                    <button class="focus:outline-none ml-4 delete_counter"><ion-icon name="trash" style="color: red;"></ion-icon></button>
-                </span>
-            </li>
-            <li class="flex justify-between items-center m-2">
-                <p class="text-base mx-2 counter_name">Counter Name </p>
-                <span class="flex items-center align-middle mx-2">
-                    <button class="focus:outline-none add_value"><ion-icon name="add-circle" style="color: green;"></ion-icon></button>
-                    <p class="mx-2 initial_value">1</p>
-                    <button class="focus:outline-none subtract_value"><ion-icon name="remove-circle" style="color: red;"></ion-icon></button>
-                    <button class="focus:outline-none ml-4 delete_counter"><ion-icon name="trash" style="color: red;"></ion-icon></button>
-                </span>
+    <nav class="flex items-center justify-between flex-wrap bg-purple-600 p-3">
+        <div class="flex items-center flex-shrink-0 text-white mr-4">
+            <i class="material-icons md-36">timer</i>
+            <span class="font-semibold text-xl tracking-tight ml-2">Counter App</span>
+        </div>
+        <!-- <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto flex justify-center">
+            <div class="mx-3 w-full sm:w-2/3 lg:w-1/3">
+            <input class="shadow appearance-none border border-gray-200 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-purple-500" id="searchCounter" type="text" placeholder="Search Counter">
+            </div>
+        </div> -->
+        <div>
+            <button href="#" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-purple-500 hover:bg-white mt-4 lg:mt-0">Sign in</button>
+            <button href="#" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-purple-500 hover:bg-white mt-4 lg:mt-0">Upload</button>
+            <button href="#" class="inline-block text-sm px-4 py-2 leading-none border rounded text-white border-white hover:border-transparent hover:text-purple-500 hover:bg-white mt-4 lg:mt-0">Download</button>
+        </div>
+    </nav>
+    <div class="container mx-auto flex flex-col justify-center items-center base">
+        <div class="w-5/6 sm:w-2/3 lg:w-1/3 py-3">
+            <input class="shadow appearance-none border border-gray-200 rounded w-full my-1 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-purple-500" id="searchCounter" type="text" placeholder="Search Counter">
+        </div>
+        <ul class="flex flex-col w-5/6 sm:w-2/3 lg:w-1/3 counterList">
+            
+            <li class="flex flex-col items-center m-3" id=''>
+                <div class="flex w-full">
+                    <p class="w-full text-center -mr-10 self-center">Counter Name 1</p>
+                    <button class="focus:outline-none deleteCounter w-10 h-10 flex items-center justify-center">
+                        <i class="material-icons md-24">delete</i>
+                    </button>
+                </div>
+                <div class="flex w-full h-16">
+                    <button class="flex-grow-0 bg-purple-700 w-16 h-full flex justify-center items-center rounded-l focus:outline-none subtractValue">
+                        <i class="material-icons md-light md-36">remove</i>
+                    </button>
+                    <div class="flex-grow text-center h-full flex items-center justify-center border-t-2 border-b-2 border-purple-700 text-2xl px-2 bg-white counterValue">
+                        1
+                    </div>
+                    <button class="flex-grow-0 bg-purple-700 w-16 h-full flex justify-center items-center rounded-r focus:outline-none addValue">
+                        <i class="material-icons md-light md-36">add</i>                            
+                    </button>
+                </div>
             </li>
             
+            <li class="flex flex-col items-center m-3" id=''>
+                <div class="flex w-full">
+                    <p class="w-full text-center -mr-10 self-center">Counter Name 2</p>
+                    <button class="focus:outline-none deleteCounter w-10 h-10 flex items-center justify-center">
+                        <i class="material-icons md-24">delete</i>
+                    </button>
+                </div>
+                <div class="flex w-full h-16">
+                    <button class="flex-grow-0 bg-purple-700 w-16 h-full flex justify-center items-center rounded-l focus:outline-none subtractValue">
+                        <i class="material-icons md-light md-36">remove</i>
+                    </button>
+                    <div class="flex-grow text-center h-full flex items-center justify-center border-t-2 border-b-2 border-purple-700 text-2xl px-2 bg-white counterValue">
+                        1
+                    </div>
+                    <button class="flex-grow-0 bg-purple-700 w-16 h-full flex justify-center items-center rounded-r focus:outline-none addValue">
+                        <i class="material-icons md-light md-36">add</i>                            
+                    </button>
+                </div>
+            </li>            
         </ul>
         <br>
-        <button type="button"
-            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none add_counter">
+        <button type="button" class="bg-purple-700 shadow rounded mx-1 py-2 px-4 text-gray-100 focus:outline-none add_counter">
             Add Counter
         </button>
+        <br>
     </div>
 
-    <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
     <script src="./script/ui.js"></script>
     <script src="./script/app.js"></script>
+    <script src="./script/counter.js"></script>
 </body>
 
 </html>
