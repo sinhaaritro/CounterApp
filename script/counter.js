@@ -18,5 +18,3 @@ class Counter{
         return id;
     }
 }
-
-const counter = new Counter('Counter Name',"#FF8040",'Description',0,'Category','1','1','1','1');
