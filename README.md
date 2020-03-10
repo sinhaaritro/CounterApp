@@ -5,18 +5,16 @@ A basic Counter App made with html, css and js. The tailwind css is just the bas
 
 ##Short Term Goals:
 
--Counter add or delete
-
--Counter search
-
--Counter value change on tap
+- Counter add or delete
+- Counter search
+- Counter value change on tap
 
 
 ##Long Term Goal:
 
--Storage
+- Storage
 
--Google Drive API to store data
+- Google Drive API to store data
 
--PWA
+- PWA
 
