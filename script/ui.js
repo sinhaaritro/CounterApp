@@ -16,7 +16,7 @@ class BackdropUI {
 //Add Counter UI Model Form
 class AddCounterUI {
     static display(){
-        BackdropUI.display();
+        // BackdropUI.display();
 
         const counter = PopUpUI.display();
 
@@ -76,7 +76,7 @@ class AddCounterUI {
         const saveButton = document.createElement('button');
         saveButton.classList.add('bg-purple-700', 'shadow', 'rounded', 'mx-1', 'py-1', 'px-3', 'text-gray-100', 'focus:outline-none');
         saveButton.innerText = 'Save';
-        saveButton.addEventListener('click', () => {addCounterToList()});
+        saveButton.addEventListener('click', () => {saveCounter()});
         control.appendChild(saveButton);
 
         counter.appendChild(title);

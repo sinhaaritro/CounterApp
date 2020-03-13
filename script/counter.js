@@ -1,6 +1,6 @@
 class Counter{
-    constructor(name, color, description, initialValue, category, incrementValue, decrementValue, autoIncrementInterval, autoDecrementInterval){
-        this.id = this.setId();
+    constructor(id, name, color, description, initialValue, category, incrementValue, decrementValue, autoIncrementInterval, autoDecrementInterval){
+        this.id = id;
         this.name = name;
         this.color = color;
         this.description = description;
@@ -12,7 +12,7 @@ class Counter{
         this.autoIncrementInterval = Number(autoIncrementInterval);
         this.autoDecrementInterval = Number(autoDecrementInterval);
     }
-    setId(){
+    static setId(){
         const date = new Date();
         const id = date.getTime();
         return id;
