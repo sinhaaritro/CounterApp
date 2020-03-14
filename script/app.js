@@ -1,8 +1,14 @@
 const addCounterButton = document.querySelector('.addCounter');
 const searchCounterButton = document.querySelector('.searchCounter');
 
-window.onload = function(){
-    indexDb({callback: getItemsFromDb});
+window.onload = function () {
+    indexDb()
+        .then(() => {
+            return getItemsFromDb();
+        })
+        .catch(err => {
+            console.log(err);
+        })
 }
 
 
@@ -12,8 +18,12 @@ addCounterButton.addEventListener('click', () => {
 });
 
 //Save Counter
-const addCounterToList = ({counter}) => {
-    CounterListUI.display({counter: counter});
+const addCounterToList = ({
+    counter
+}) => {
+    CounterListUI.display({
+        counter: counter
+    });
 }
 
 //Add to list
@@ -21,17 +31,23 @@ const saveCounter = () => {
     const counterName = document.querySelector('#counterName').value.trim();
     if (counterName.length) {
         const id = Counter.setId();
+        const value = document.querySelector('#initialValue').value.trim();
         const initialValue = document.querySelector('#initialValue').value.trim();
         const description = document.querySelector('#description') === null ? '' : document.querySelector('#description').value.trim();
         const category = document.querySelector('#category') === null ? '' : document.querySelector('#category').value.trim();
-        const incrementValue = document.querySelector('#incrementInterval') === null ? '1' : document.querySelector('#incrementValue').value.trim();
-        const decrementValue = document.querySelector('#decrementInterval') === null ? '1' : document.querySelector('#decrementValue').value.trim();
+        const incrementValue = document.querySelector('#incrementValue') === null ? '1' : document.querySelector('#incrementValue').value.trim();
+        const decrementValue = document.querySelector('#decrementValue') === null ? '1' : document.querySelector('#decrementValue').value.trim();
         const autoIncrementInterval = document.querySelector('#autoIncrementInterval') === null ? '' : document.querySelector('#autoIncrementInterval').value.trim();
         const autoDecrementInterval = document.querySelector('#autoDecrementInterval') === null ? '' : document.querySelector('#autoDecrementInterval').value.trim();
-        const counter = new Counter(id, counterName, '#FF8040', description, initialValue, category, incrementValue, decrementValue, autoIncrementInterval, autoDecrementInterval);
-        indexDb({item: counter,callback: addItemToDb});
-        addCounterToList({counter: counter});
-        // console.log(counter);
+        const counter = new Counter(id, counterName, '#FF8040', description, value, initialValue, category, incrementValue, decrementValue, autoIncrementInterval, autoDecrementInterval);
+        indexDb()
+            .then(() => {
+                return addItemToDb(counter);
+            })
+            .then(() => addCounterToList({
+                counter: counter
+            }))
+            .catch(err => console.log(err))
     }
     AddCounterUI.destroy();
 };
@@ -49,31 +65,57 @@ ul.addEventListener('click', e => {
 //Increment
 const increaseValue = (e) => {
     const id = Number(e.target.closest('li').id);
-    counter = indexDb({item: id,callback: getItemFromDb});
-    console.log(counter);
-    // counter.
+    let currentValue;
 
-    // indexDb({item: counter,callback: updateItemToDb});
-    //TODO get current value and increment/decrement value for the id then add or subract based on that
-    currentValue = Number(e.target.closest('li').querySelector('.counterValue').innerText);
-    currentValue = currentValue + 1;
-    //TODO data save
-    e.target.closest('li').querySelector('.counterValue').innerText = currentValue;
+    indexDb()
+        .then(() => {
+            return getItemFromDb(id);
+        })
+        .then(counter => {
+            console.log(counter.incrementValue)
+            currentValue = counter.value + counter.incrementValue;
+            counter.value = currentValue;
+            return updateItemToDb(counter);
+        })
+        .then(() => {
+            e.target.closest('li').querySelector('.counterValue').innerText = currentValue;
+        })
+        .catch(err => console.log(err));
 }
 //Decrement
 const decreaseValue = (e) => {
-    currentValue = Number(e.target.closest('li').querySelector('.counterValue').innerText);
-    currentValue = currentValue - 1;
-    //TODO data save
-    e.target.closest('li').querySelector('.counterValue').innerText = currentValue;
+    const id = Number(e.target.closest('li').id);
+    let currentValue;
+
+    indexDb()
+        .then(() => {
+            return getItemFromDb(id);
+        })
+        .then(counter => {
+            currentValue = counter.value - counter.decrementValue;
+            counter.value = currentValue;
+            return updateItemToDb(counter);
+        })
+        .then(() => {
+            e.target.closest('li').querySelector('.counterValue').innerText = currentValue;
+        })
+        .catch(err => console.log(err));
 }
 
 //Delete
 const deleteCounter = (e) => {
     const id = Number(e.target.closest('li').id);
-    indexDb({item: id,callback: deleteItemFromDb});
-
-    CounterListUI.destroy({e: e});
+    indexDb()
+        .then(data => {
+            return deleteItemFromDb(id);
+        })
+        .then(() => {
+            console.log('Counter Deleted');
+            CounterListUI.destroy({
+                e: e
+            });
+        })
+        .catch(err => console.log(err));
 }
 
 //Search
